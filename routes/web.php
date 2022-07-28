@@ -1,7 +1,5 @@
 <?php
 
-use App\Mail\TestMail;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,7 +17,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/send', function () {
-    Mail::to('dev.sief.hesham@gmail.com')->send(new TestMail());
-    return response('Sending Done!');
-});
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth','verified'])->name('dashboard');
+
+require __DIR__.'/auth.php';

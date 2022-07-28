@@ -2,6 +2,7 @@
 
 namespace App\Mail;
 
+use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -11,14 +12,11 @@ class TestMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    /**
-     * Create a new message instance.
-     *
-     * @return void
-     */
-    public function __construct()
+    protected $user;
+    public function __construct($user)
     {
         //
+        $this->user = $user;
     }
 
     /**
@@ -28,6 +26,8 @@ class TestMail extends Mailable
      */
     public function build()
     {
-        return $this->markdown('mail.welcome');
+        return $this->markdown('mail.welcome')->with([
+            'user'=>$this->user
+        ]);
     }
 }
